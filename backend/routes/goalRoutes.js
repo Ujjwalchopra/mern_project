@@ -1,15 +1,21 @@
-const { json } = require('body-parser');
-const express= require('express');
-const router= express.Router();
-const {getgoals,setgoals,updategoals, deletegoals} = require('../controller/goalController');
+const { json } = require("body-parser");
+const express = require("express");
+const router = express.Router();
+const {
+  getgoals,
+  setgoals,
+  updategoals,
+  deletegoals,
+} = require("../controller/goalController");
 
-router.get('/',getgoals);
+const {protect}= require('../Middleware/authMiddleware')
 
- router.post('/',setgoals);
+router.get("/",protect, getgoals);
 
- router.put('/:id',updategoals);
+router.post("/",protect, setgoals);
 
- router.delete('/:id', deletegoals);
+router.put("/:id",protect, updategoals);
 
- 
-module.exports= router;
+router.delete("/:id",protect, deletegoals);
+
+module.exports = router;
